@@ -30,7 +30,7 @@ aqi13 <- read.csv(data_spot3)
 aqi14 <- read.csv(data_spot4)
 aqi15 <- read.csv(data_spot5)
 
-# Extracting only median AQU data
+# Extracting only median AQI data
 keeps <- c('State', 'County', 'Median.AQI')
 aqi11 = aqi11[keeps]
 aqi12 = aqi12[keeps]
@@ -52,8 +52,13 @@ t3<- left_join(t2,aqi14,by=c("State","County"))
 final<- left_join(t3,aqi15,by=c("State","County"))
 
 # Adding FIPPS code with usmap package
+# Currently getting error message because there are some states not represented in package dataset. Will wait to merge by name with COVID data to get FIPPS code
 final %>% 
   group_by(State) %>% 
   summarise(new = list(fips(state = first(State), county = County))) %>%
   unnest(c(new))
+
+# Now to create average AQI column
+final$av.aqi <- rowMeans(final[ , c(3:7)], na.rm=TRUE)
+str(final)
 
