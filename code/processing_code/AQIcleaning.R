@@ -16,7 +16,6 @@ library(reshape2) # Reshaping data structure
 
 #path to data
 #note the use of the here() package and not absolute paths
-#From Dengue Forecasting Project
 data_spot1 <- here::here("data","raw_data","annual_aqi_by_county_2011.csv") 
 data_spot2 <- here::here("data","raw_data","annual_aqi_by_county_2012.csv") 
 data_spot3 <- here::here("data","raw_data","annual_aqi_by_county_2013.csv")
