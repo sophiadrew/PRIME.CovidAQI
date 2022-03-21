@@ -1,0 +1,59 @@
+---
+title: "3/16/2022 PRIME meeting"
+output: html_notebook
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+### Little bits on data cleaning
+just an FYI...
+
+Demographic data = 3,220 observations
+
+Covid data = 3,342 observations
+- Starting from Jan 2020 to Jan 1 2022
+- What is a good way to capture cases? Right now its #Cumulativecases / Population = large number
+
+AQI data = 1,093 observations
+- possibly retrieve from EPA API... BUT https://cran.r-project.org/web/packages/RAQSAPI/vignettes/RAQSAPIvignette.html
+
+
+Combined data
+ - about 40 counties that did not cross over, may have to manually 
+ 
+# Mapping
+Here are some variables:
+*Cumulative Death = Cumulative deaths / Population
+*Cumulative Death per Case = Cumulative deaths / Cumulative Case
+*Cumulative Case = Cumulative Case / Population
+
+##  Deaths per cases by county
+```{r demo1,  fig.cap='', echo=FALSE}
+knitr::include_graphics("~/Documents/School/Spring 2022/PRIME.2/PRIME.CovidAQI/results/deathspercasecountymap.png")
+```
+
+##  Cumulative Case rate by county
+```{r demo2,  fig.cap='', echo=FALSE}
+knitr::include_graphics("~/Documents/School/Spring 2022/PRIME.2/PRIME.CovidAQI/results/caseratecountymap.png")
+```
+##  Deaths per cases by county W/ GGPLOT
+```{r demo3,  fig.cap='', echo=FALSE}
+knitr::include_graphics("~/Documents/School/Spring 2022/PRIME.2/PRIME.CovidAQI/results/caseratecountymap2.png")
+```
+
+
+##  AQI average by county
+```{r demo4,  fig.cap='', echo=FALSE}
+knitr::include_graphics("~/Documents/School/Spring 2022/PRIME.2/PRIME.CovidAQI/results/AQIcountymap.png")
+```
+
+
+
+
+
+
+
+
+
+

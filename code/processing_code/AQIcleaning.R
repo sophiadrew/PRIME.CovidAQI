@@ -3,6 +3,7 @@
 #
 #this script loads the raw data from the EPA Air Data.
 #processes and cleans it and saves it as Rds file in the processed_data folder
+# processing done by Sophia Drewry
 
 #load needed packages. make sure they are installed.
 library(readr) #for loading Excel files & txt files
@@ -50,14 +51,18 @@ t2<- left_join(t1,aqi13,by=c("State","County"))
 t3<- left_join(t2,aqi14,by=c("State","County"))
 final<- left_join(t3,aqi15,by=c("State","County"))
 
-# Adding FIPPS code with usmap package
-# Currently getting error message because there are some states not represented in package dataset. Will wait to merge by name with COVID data to get FIPPS code
-final %>% 
-  group_by(State) %>% 
-  summarise(new = list(fips(state = first(State), county = County))) %>%
-  unnest(c(new))
 
 # Now to create average AQI column
 final$av.aqi <- rowMeans(final[ , c(3:7)], na.rm=TRUE)
 str(final)
 
+# remove variables
+final <- final[,-c(3:7) ]
+
+
+# Save   --------------------------------------------------------------------------------
+save_data_location1 <- here::here("data","processed_data","aqi.csv")
+write_csv(final, file = save_data_location1)
+
+save_data_location1 <- here::here("data","processed_data","aqi.csv")
+saveRDS(final, file = save_data_location1)

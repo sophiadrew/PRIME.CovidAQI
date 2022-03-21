@@ -3,6 +3,7 @@
 #
 # this script loads the raw data from the American Community Survey.
 # processes and cleans it and saves it as Rds file in the processed_data folder
+# processing done by Sophia Drewry
 
 #load needed packages. make sure they are installed.
 library(readr) #for loading Excel files & txt files
@@ -25,6 +26,7 @@ demo <- demo %>%
 
 # removing the word "county" from the data set
 demo$County = gsub("County", "", demo$County)
+demo$County = gsub("Municipio", "", demo$County)
 
 # renaming multiple variables
 demo1 <- rename(demo, TotalPop = SE_A00001_001,
@@ -42,13 +44,41 @@ demo1 <- rename(demo, TotalPop = SE_A00001_001,
        pacific_island = SE_B04001_007,
        other = SE_B04001_008,
        mult_race = SE_B04001_009,
-       hisp = SE_B04001_010)
+       hisp = SE_B04001_010,
+       FIPS = Geo_FIPS)
+
+# removing pesky whitespaces
+str(demo1)
+demo1$State<- sub(".*? ", "", demo1$State)
+
+#turn into factor
+demo1 <- demo1 %>% mutate_if(is.character,as.factor)
 
 # removing unnecessary variables
-demo1 <- demo1 %>% select(-c("Geo_FIPS",
-                        "Geo_NAME", 
+demo2 <- demo1 %>% select(-c("Geo_NAME", 
                         "Geo_STUSAB" ))
 
-str(demo)
+
+
+
+# Save   --------------------------------------------------------------------------------
+save_data_location3 <- here::here("data","processed_data","demo.rds")
+saveRDS(demo2, file = save_data_location3)
+
+
+#############################################################################################
+
+#############################################################################################
+#try2
+
+
+
+
+
+
+
+
+
+
 
 
