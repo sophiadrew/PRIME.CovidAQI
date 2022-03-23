@@ -42,6 +42,11 @@ knitr::include_graphics("~/Documents/School/Spring 2022/PRIME.2/PRIME.CovidAQI/r
 knitr::include_graphics("~/Documents/School/Spring 2022/PRIME.2/PRIME.CovidAQI/results/caseratecountymap2.png")
 ```
 
+# Corr plot by variable rates
+```{r demo3,  fig.cap='', echo=FALSE}
+knitr::include_graphics("~/Documents/School/Spring 2022/PRIME.2/PRIME.CovidAQI/results/fullpermat.cor.png")
+```
+
 
 ##  AQI average by county
 ```{r demo4,  fig.cap='', echo=FALSE}
