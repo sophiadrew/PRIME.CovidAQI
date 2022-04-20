@@ -17,38 +17,38 @@ library(reshape2) # Reshaping data structure
 
 #path to data
 #note the use of the here() package and not absolute paths
-data_spot1 <- here::here("data","raw_data","annual_aqi_by_county_2011.csv") 
-data_spot2 <- here::here("data","raw_data","annual_aqi_by_county_2012.csv") 
-data_spot3 <- here::here("data","raw_data","annual_aqi_by_county_2013.csv")
-data_spot4 <- here::here("data","raw_data","annual_aqi_by_county_2014.csv")
+data_spot1 <- here::here("data","raw_data","annual_aqi_by_county_2019.csv") 
+data_spot2 <- here::here("data","raw_data","annual_aqi_by_county_2018.csv") 
+data_spot3 <- here::here("data","raw_data","annual_aqi_by_county_2017.csv")
+data_spot4 <- here::here("data","raw_data","annual_aqi_by_county_2016.csv")
 data_spot5 <- here::here("data","raw_data","annual_aqi_by_county_2015.csv")
 
 #load data 
-aqi11 <- read.csv(data_spot1)
-aqi12 <- read.csv(data_spot2)
-aqi13 <- read.csv(data_spot3)
-aqi14 <- read.csv(data_spot4)
+aqi19 <- read.csv(data_spot1)
+aqi18 <- read.csv(data_spot2)
+aqi17 <- read.csv(data_spot3)
+aqi16 <- read.csv(data_spot4)
 aqi15 <- read.csv(data_spot5)
 
 # Extracting only median AQI data
 keeps <- c('State', 'County', 'Median.AQI')
-aqi11 = aqi11[keeps]
-aqi12 = aqi12[keeps]
-aqi13 = aqi13[keeps]
-aqi14 = aqi14[keeps]
+aqi19 = aqi19[keeps]
+aqi18 = aqi18[keeps]
+aqi17 = aqi17[keeps]
+aqi16 = aqi16[keeps]
 aqi15 = aqi15[keeps]
 
 #renaming before merging
-colnames(aqi11)[colnames(aqi11) == 'Median.AQI'] <- 'aqi2011' 
-colnames(aqi12)[colnames(aqi12) == 'Median.AQI'] <- 'aqi2012'
-colnames(aqi13)[colnames(aqi13) == 'Median.AQI'] <- 'aqi2013'
-colnames(aqi14)[colnames(aqi14) == 'Median.AQI'] <- 'aqi2014'
+colnames(aqi19)[colnames(aqi19) == 'Median.AQI'] <- 'aqi2019' 
+colnames(aqi18)[colnames(aqi18) == 'Median.AQI'] <- 'aqi2018'
+colnames(aqi17)[colnames(aqi17) == 'Median.AQI'] <- 'aqi2017'
+colnames(aqi16)[colnames(aqi16) == 'Median.AQI'] <- 'aqi2016'
 colnames(aqi15)[colnames(aqi15) == 'Median.AQI'] <- 'aqi2015'
 
 # Merging
-t1<- left_join(aqi11,aqi12,by=c("State","County"))
-t2<- left_join(t1,aqi13,by=c("State","County"))
-t3<- left_join(t2,aqi14,by=c("State","County"))
+t1<- left_join(aqi19,aqi18,by=c("State","County"))
+t2<- left_join(t1,aqi17,by=c("State","County"))
+t3<- left_join(t2,aqi16,by=c("State","County"))
 final<- left_join(t3,aqi15,by=c("State","County"))
 
 

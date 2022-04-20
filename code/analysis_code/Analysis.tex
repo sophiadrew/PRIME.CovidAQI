@@ -1,0 +1,786 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\title{Analysis}
+\author{}
+\date{\vspace{-2.5em}}
+
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Analysis},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\begin{document}
+\maketitle
+
+\begin{verbatim}
+## here() starts at /Users/sophiadrewry/Documents/School/Spring 2022/PRIME.2/PRIME.CovidAQI
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'lubridate'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     date, intersect, setdiff, union
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: ggplot2
+\end{verbatim}
+
+\begin{verbatim}
+## Google's Terms of Service: https://cloud.google.com/maps-platform/terms/.
+\end{verbatim}
+
+\begin{verbatim}
+## Please cite ggmap if you use it! See citation("ggmap") for details.
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'rstatix'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:stats':
+## 
+##     filter
+\end{verbatim}
+
+\begin{verbatim}
+## corrplot 0.92 loaded
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_spot }\OtherTok{\textless{}{-}}\NormalTok{ here}\SpecialCharTok{::}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{,}\StringTok{"processed\_data"}\NormalTok{,}\StringTok{"cafinal.rds"}\NormalTok{) }
+\NormalTok{ca }\OtherTok{\textless{}{-}} \FunctionTok{read\_rds}\NormalTok{(data\_spot)}
+\FunctionTok{summary}\NormalTok{(ca)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        County              State         FIPS           UID          
+##  Alameda  : 1   California    :58   Min.   :6001   Min.   :84006001  
+##  Alpine   : 1   Alabama       : 0   1st Qu.:6030   1st Qu.:84006030  
+##  Amador   : 1   Alaska        : 0   Median :6058   Median :84006058  
+##  Butte    : 1   American Samoa: 0   Mean   :6058   Mean   :84006058  
+##  Calaveras: 1   Arizona       : 0   3rd Qu.:6086   3rd Qu.:84006086  
+##  Colusa   : 1   Arkansas      : 0   Max.   :6115   Max.   :84006115  
+##  (Other)  :52   (Other)       : 0                                    
+##                     Combined_Key CumulativeCase      CumulativeDeath  
+##  Alameda, California, US  : 1    Min.   :    36797   Min.   :      0  
+##  Alpine, California, US   : 1    1st Qu.:  1820798   1st Qu.:  21877  
+##  Amador, California, US   : 1    Median :  6784616   Median :  91162  
+##  Butte, California, US    : 1    Mean   : 29079561   Mean   : 437378  
+##  Calaveras, California, US: 1    3rd Qu.: 24892468   3rd Qu.: 332303  
+##  Colusa, California, US   : 1    Max.   :537345697   Max.   :9956491  
+##  (Other)                  :52                                         
+##     TotalPop             male             female           under_18      
+##  Min.   :    1039   Min.   :    554   Min.   :    485   Min.   :    201  
+##  1st Qu.:   47647   1st Qu.:  24025   1st Qu.:  23622   1st Qu.:   8866  
+##  Median :  184632   Median :  93337   Median :  92903   Median :  44146  
+##  Mean   :  677302   Mean   : 336660   Mean   : 340641   Mean   : 155554  
+##  3rd Qu.:  692751   3rd Qu.: 344832   3rd Qu.: 347919   3rd Qu.: 146507  
+##  Max.   :10081570   Max.   :4969382   Max.   :5112188   Max.   :2214760  
+##                                                                          
+##    age18to34         age35to64           age65          not_hispanic    
+##  Min.   :    134   Min.   :    393   Min.   :    311   Min.   :    909  
+##  1st Qu.:  10008   1st Qu.:  18900   1st Qu.:  10368   1st Qu.:  34317  
+##  Median :  40827   Median :  69481   Median :  28176   Median : 134433  
+##  Mean   : 168236   Mean   : 258925   Mean   :  94587   Mean   : 413031  
+##  3rd Qu.: 160163   3rd Qu.: 253142   3rd Qu.:  94304   3rd Qu.: 402251  
+##  Max.   :2603161   Max.   :3927671   Max.   :1335978   Max.   :5193136  
+##                                                                         
+##      white             black              AIANA           asian          
+##  Min.   :    551   Min.   :     2.0   Min.   :   29   Min.   :      0.0  
+##  1st Qu.:  30796   1st Qu.:   640.5   1st Qu.:  477   1st Qu.:    755.2  
+##  Median : 101265   Median :  3612.0   Median : 1328   Median :  10013.0  
+##  Mean   : 251816   Mean   : 37399.2   Mean   : 2428   Mean   :  96740.2  
+##  3rd Qu.: 287264   3rd Qu.: 16366.2   3rd Qu.: 2446   3rd Qu.:  55715.0  
+##  Max.   :2641770   Max.   :790252.0   Max.   :20831   Max.   :1454769.0  
+##                                                                          
+##  pacific_island         other            mult_race           hisp        
+##  Min.   :    0.00   Min.   :    0.00   Min.   :    23   Min.   :    130  
+##  1st Qu.:   61.25   1st Qu.:   64.75   1st Qu.:  1508   1st Qu.:   9950  
+##  Median :  290.00   Median :  272.50   Median :  6010   Median :  50756  
+##  Mean   : 2427.38   Mean   : 1726.19   Mean   : 20494   Mean   : 264270  
+##  3rd Qu.: 1857.25   3rd Qu.: 1510.75   3rd Qu.: 20486   3rd Qu.: 253535  
+##  Max.   :24597.00   Max.   :32413.00   Max.   :228504   Max.   :4888434  
+##                                                                          
+##      av.aqi          rcase           rdeath       rdeathpercase     
+##  Min.   :12.60   Min.   :13.38   Min.   :0.0000   Min.   :0.000000  
+##  1st Qu.:40.15   1st Qu.:26.21   1st Qu.:0.2682   1st Qu.:0.009608  
+##  Median :45.00   Median :35.27   Median :0.3837   Median :0.011341  
+##  Mean   :49.17   Mean   :37.40   Mean   :0.4378   Mean   :0.011413  
+##  3rd Qu.:55.20   3rd Qu.:46.02   3rd Qu.:0.5294   3rd Qu.:0.013952  
+##  Max.   :90.60   Max.   :81.81   Max.   :1.7119   Max.   :0.023950  
+##  NA's   :4                                                          
+##      rmale           rfemale         runder_18        rage18to34    
+##  Min.   :0.4823   Min.   :0.3403   Min.   :0.1343   Min.   :0.1290  
+##  1st Qu.:0.4948   1st Qu.:0.4900   1st Qu.:0.1946   1st Qu.:0.1851  
+##  Median :0.4985   Median :0.5015   Median :0.2156   Median :0.2324  
+##  Mean   :0.5062   Mean   :0.4938   Mean   :0.2210   Mean   :0.2233  
+##  3rd Qu.:0.5100   3rd Qu.:0.5052   3rd Qu.:0.2605   3rd Qu.:0.2564  
+##  Max.   :0.6597   Max.   :0.5177   Max.   :0.3099   Max.   :0.3375  
+##                                                                     
+##    rage35to64         rage65        rnot_hispanic        rwhite      
+##  Min.   :0.3293   Min.   :0.09996   Min.   :0.1579   Min.   :0.1064  
+##  1st Qu.:0.3597   1st Qu.:0.13319   1st Qu.:0.5530   1st Qu.:0.3531  
+##  Median :0.3830   Median :0.15412   Median :0.7447   Median :0.5195  
+##  Mean   :0.3798   Mean   :0.17594   Mean   :0.6938   Mean   :0.5374  
+##  3rd Qu.:0.4000   3rd Qu.:0.21049   3rd Qu.:0.8532   3rd Qu.:0.7177  
+##  Max.   :0.4293   Max.   :0.29933   Max.   :0.9270   Max.   :0.8757  
+##                                                                      
+##      rblack              rAIANA             rasian        rpacific_island   
+##  Min.   :0.0006579   Min.   :0.001464   Min.   :0.00000   Min.   :0.000000  
+##  1st Qu.:0.0103318   1st Qu.:0.003097   1st Qu.:0.01614   1st Qu.:0.001232  
+##  Median :0.0182224   Median :0.005100   Median :0.04236   Median :0.002071  
+##  Mean   :0.0298417   Mean   :0.017739   Mean   :0.07307   Mean   :0.002799  
+##  3rd Qu.:0.0332593   3rd Qu.:0.014082   3rd Qu.:0.07867   3rd Qu.:0.003323  
+##  Max.   :0.1350115   Max.   :0.302214   Max.   :0.36280   Max.   :0.013151  
+##                                                                             
+##      rother           rmult_race           rhisp        
+##  Min.   :0.000000   Min.   :0.007566   Min.   :0.07299  
+##  1st Qu.:0.001054   1st Qu.:0.022912   1st Qu.:0.14680  
+##  Median :0.001597   Median :0.028936   Median :0.25531  
+##  Mean   :0.002084   Mean   :0.030801   Mean   :0.30622  
+##  3rd Qu.:0.002757   3rd Qu.:0.038898   3rd Qu.:0.44700  
+##  Max.   :0.009021   Max.   :0.054775   Max.   :0.84212  
+##                                                         
+##  hospitalized_covid_patients icu_covid_confirmed_patients      hosp        
+##  Min.   :      0             Min.   :     0.0             Min.   :0.00000  
+##  1st Qu.:   2410             1st Qu.:   729.2             1st Qu.:0.03777  
+##  Median :  14834             Median :  3186.5             Median :0.05860  
+##  Mean   :  65937             Mean   : 15637.7             Mean   :0.06966  
+##  3rd Qu.:  55921             3rd Qu.: 13927.0             3rd Qu.:0.09282  
+##  Max.   :1161549             Max.   :267675.0             Max.   :0.18158  
+##  NA's   :2                   NA's   :2                    NA's   :2        
+##    covidhosp          cfr              icu                fips     
+##  Min.   :0.000   Min.   : 0.000   Min.   :0.000000   Min.   :6001  
+##  1st Qu.:1.341   1st Qu.: 9.608   1st Qu.:0.009178   1st Qu.:6030  
+##  Median :1.839   Median :11.341   Median :0.015251   Median :6058  
+##  Mean   :1.843   Mean   :11.413   Mean   :0.015700   Mean   :6058  
+##  3rd Qu.:2.219   3rd Qu.:13.952   3rd Qu.:0.020835   3rd Qu.:6086  
+##  Max.   :4.771   Max.   :23.950   Max.   :0.051057   Max.   :6115  
+##  NA's   :2                        NA's   :2
+\end{verbatim}
+
+\hypertarget{walkthrough-of-the-data}{%
+\section{Walkthrough of the data:}\label{walkthrough-of-the-data}}
+
+\begin{itemize}
+\tightlist
+\item
+  Outcome: Covid Hospitalization Ratio = covidhosp = \# of
+  hospitalized\_covid\_patients/CumulativeCase) *1000
+\item
+  Main Predictor: AQI = avi.aqi
+\end{itemize}
+
+Note: All variables are by county
+
+\hypertarget{demographic-variables}{%
+\subsubsection{Demographic Variables:}\label{demographic-variables}}
+
+\begin{itemize}
+\tightlist
+\item
+  TotalPop
+\item
+  male
+\item
+  female
+\item
+  under\_18
+\item
+  age18to34\\
+\item
+  age35to64\\
+\item
+  age65\\
+\item
+  not\_hispanic
+\item
+  white\\
+\item
+  black\\
+\item
+  AIANA\\
+\item
+  asian\\
+\item
+  pacific\_island\\
+\item
+  other\\
+\item
+  mult\_race\\
+\item
+  hisp
+\end{itemize}
+
+Note: variables with r in front ar the rate form. Ex. rblack i= \# of
+black residents in county / county population
+
+Now I am going through each variable
+
+\hypertarget{covid-hospitalization-ratio}{%
+\section{Covid Hospitalization
+Ratio}\label{covid-hospitalization-ratio}}
+
+Filter out counties with missing data ca1 \textless- ca \%\textgreater\%
+filter(!County \%in\% c(``Alpine'', ``Sierra'', ``Modoc'', ``Sutter''))
+
+As a reminder, this is the number of covid hospitalization / covid cases
+per 1,000
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# here is the distribution of the raw numbers}
+\FunctionTok{hist}\NormalTok{(ca}\SpecialCharTok{$}\NormalTok{hospitalized\_covid\_patients)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Analysis_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+obviously there is a county with an outlier\ldots it appears to be
+sorted out for the rate version
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# hist of the ratio}
+\FunctionTok{hist}\NormalTok{(ca}\SpecialCharTok{$}\NormalTok{covidhosp)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Analysis_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{hist}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(ca}\SpecialCharTok{$}\NormalTok{covidhosp))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Analysis_files/figure-latex/unnamed-chunk-4-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# more histograms}
+\CommentTok{\# hist(log(ca$covidhosp))}
+\CommentTok{\# boxplot(ca$covidhosp, col=terrain.colors(4) )}
+
+\CommentTok{\# log transforming}
+\NormalTok{ca}\SpecialCharTok{$}\NormalTok{logcovidhosp}\OtherTok{\textless{}{-}} \FunctionTok{log}\NormalTok{(ca}\SpecialCharTok{$}\NormalTok{covidhosp)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{outlier-identification}{%
+\subsubsection{outlier identification}\label{outlier-identification}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# identify outliers}
+\NormalTok{ca }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{identify\_outliers}\NormalTok{(covidhosp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   County      State FIPS      UID           Combined_Key CumulativeCase
+## 1 Placer California 6061 84006061 Placer, California, US       11438728
+## 2 Sutter California 6101 84006101 Sutter, California, US        4367557
+## 3   Yuba California 6115 84006115   Yuba, California, US        2935324
+##   CumulativeDeath TotalPop   male female under_18 age18to34 age35to64 age65
+## 1          126145   385512 188162 197350    86331     71057    154352 73772
+## 2           49510    96109  47866  48243    25059     21863     34769 14418
+## 3           21569    76360  38950  37410    21078     19442     26465  9375
+##   not_hispanic  white black AIANA asian pacific_island other mult_race  hisp
+## 1       331543 280105  6361  1373 28573            566   391     14174 53969
+## 2        66361  44412  1684   625 14914            376   148      4202 29748
+## 3        54797  42145  2554   594  5075            296   136      3997 21563
+##   av.aqi    rcase    rdeath rdeathpercase     rmale   rfemale runder_18
+## 1   49.8 29.67152 0.3272142   0.011027887 0.4880834 0.5119166 0.2239386
+## 2   50.0 45.44379 0.5151443   0.011335857 0.4980387 0.5019613 0.2607352
+## 3     NA 38.44060 0.2824646   0.007348082 0.5100838 0.4899162 0.2760346
+##   rage18to34 rage35to64    rage65 rnot_hispanic    rwhite     rblack
+## 1  0.1843185  0.4003818 0.1913611     0.8600070 0.7265792 0.01650013
+## 2  0.2274813  0.3617663 0.1500172     0.6904764 0.4621003 0.01752177
+## 3  0.2546097  0.3465820 0.1227737     0.7176139 0.5519251 0.03344683
+##        rAIANA     rasian rpacific_island      rother rmult_race     rhisp
+## 1 0.003561497 0.07411702     0.001468177 0.001014236 0.03676669 0.1399930
+## 2 0.006503033 0.15517798     0.003912225 0.001539918 0.04372119 0.3095236
+## 3 0.007778942 0.06646150     0.003876375 0.001781037 0.05234416 0.2823861
+##   hospitalized_covid_patients icu_covid_confirmed_patients      hosp covidhosp
+## 1                       54573                        10213 0.1415598  4.770898
+## 2                           0                            0 0.0000000  0.000000
+## 3                       13758                         3655 0.1801729  4.687046
+##         cfr        icu fips logcovidhosp is.outlier is.extreme
+## 1 11.027887 0.02649204 6061     1.562534       TRUE      FALSE
+## 2 11.335857 0.00000000 6101         -Inf       TRUE      FALSE
+## 3  7.348082 0.04786537 6115     1.544803       TRUE      FALSE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#\# Sutter, Placer \& Yuba....}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{now-checking-normality}{%
+\subsubsection{now checking normality}\label{now-checking-normality}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ca }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{shapiro\_test}\NormalTok{(covidhosp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 3
+##   variable  statistic      p
+##   <chr>         <dbl>  <dbl>
+## 1 covidhosp     0.944 0.0113
+\end{verbatim}
+
+hmmmm pvalue is \textless0.05 so we CANNOT assume normality\ldots{} I am
+going to go for a one way ANOVA test instead of t test.
+
+\hypertarget{one-way-anova}{%
+\subsubsection{one way anova}\label{one-way-anova}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{res.aov }\OtherTok{\textless{}{-}} \FunctionTok{aov}\NormalTok{(covidhosp }\SpecialCharTok{\textasciitilde{}}\NormalTok{ County, }\AttributeTok{data =}\NormalTok{ ca)}
+\CommentTok{\# Summary of the analysis}
+\FunctionTok{summary.aov}\NormalTok{(res.aov)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             Df Sum Sq Mean Sq
+## County      55  47.13  0.8569
+## 2 observations deleted due to missingness
+\end{verbatim}
+
+I am not getting any pvalues\ldots{}
+
+\hypertarget{average-aqi}{%
+\section{Average Aqi}\label{average-aqi}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# hist of the ratio}
+\FunctionTok{hist}\NormalTok{(ca}\SpecialCharTok{$}\NormalTok{av.aqi)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Analysis_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{boxplot}\NormalTok{(ca}\SpecialCharTok{$}\NormalTok{av.aqi, }\AttributeTok{col=}\FunctionTok{terrain.colors}\NormalTok{(}\DecValTok{4}\NormalTok{) )}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Analysis_files/figure-latex/unnamed-chunk-9-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# we hav a couple extremes}
+
+\CommentTok{\# identify outliers}
+\NormalTok{ca }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{identify\_outliers}\NormalTok{(av.aqi)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           County      State FIPS      UID                   Combined_Key
+## 1      Del Norte California 6015 84006015      Del Norte, California, US
+## 2         Fresno California 6019 84006019         Fresno, California, US
+## 3           Kern California 6029 84006029           Kern, California, US
+## 4    Los Angeles California 6037 84006037    Los Angeles, California, US
+## 5           Mono California 6051 84006051           Mono, California, US
+## 6      Riverside California 6065 84006065      Riverside, California, US
+## 7 San Bernardino California 6071 84006071 San Bernardino, California, US
+## 8         Tulare California 6107 84006107         Tulare, California, US
+##   CumulativeCase CumulativeDeath TotalPop    male  female under_18 age18to34
+## 1         799489            6504    27495   14745   12750     5920      5916
+## 2       49743377          696587   984521  491146  493375   280844    250116
+## 3       49778867          550123   887641  454843  432798   258089    229165
+## 4      537345697         9956491 10081570 4969382 5112188  2214760   2603161
+## 5         566602            1521    14310    7634    6676     2671      3827
+## 6      131281722         1834017  2411439 1200960 1210479   614149    572346
+## 7      128750579         1897472  2149031 1069766 1079265   571568    552375
+## 8       26891256          366606   461898  230966  230932   143158    112882
+##   age35to64   age65 not_hispanic   white  black AIANA   asian pacific_island
+## 1     10932    4727        22066   17028    899  1943     862             44
+## 2    335784  117777       462157  289650  44209  4651   99480           1207
+## 3    305675   94712       414267  303225  45761  4303   40730           1115
+## 4   3927671 1335978      5193136 2641770 790252 20831 1454769          24597
+## 5      5763    2049        10445    9308     59   242     363              0
+## 6    884369  340575      1231961  851702 147160 10362  152347           6471
+## 7    783127  241961      1003157  613066 169340  7783  150165           6160
+## 8    154327   51531       163653  131716   5785  2784   14949            624
+##   other mult_race    hisp av.aqi    rcase    rdeath rdeathpercase     rmale
+## 1   176      1114    5429   12.6 29.07761 0.2365521   0.008135196 0.5362793
+## 2  1732     21228  522364   81.6 50.52546 0.7075390   0.014003613 0.4988680
+## 3   873     18260  473374   87.6 56.07995 0.6197584   0.011051336 0.5124177
+## 4 32413    228504 4888434   80.0 53.29980 0.9875933   0.018529023 0.4929175
+## 5    96       377    3865   16.2 39.59483 0.1062893   0.002684424 0.5334731
+## 6  5936     57983 1179478   90.6 54.44124 0.7605488   0.013970086 0.4980263
+## 7  3624     53019 1145874   84.2 59.91099 0.8829431   0.014737580 0.4977899
+## 8  1002      6793  298245   82.0 58.21904 0.7936947   0.013632907 0.5000368
+##     rfemale runder_18 rage18to34 rage35to64    rage65 rnot_hispanic    rwhite
+## 1 0.4637207 0.2153119  0.2151664  0.3975996 0.1719222     0.8025459 0.6193126
+## 2 0.5011320 0.2852595  0.2540484  0.3410633 0.1196287     0.4694232 0.2942040
+## 3 0.4875823 0.2907583  0.2581731  0.3443678 0.1067008     0.4667056 0.3416077
+## 4 0.5070825 0.2196840  0.2582099  0.3895892 0.1325169     0.5151118 0.2620395
+## 5 0.4665269 0.1866527  0.2674354  0.4027254 0.1431866     0.7299092 0.6504542
+## 6 0.5019737 0.2546815  0.2373462  0.3667391 0.1412331     0.5108821 0.3531924
+## 7 0.5022101 0.2659655  0.2570344  0.3644094 0.1125907     0.4667950 0.2852755
+## 8 0.4999632 0.3099342  0.2443873  0.3341149 0.1115636     0.3543055 0.2851625
+##        rblack      rAIANA     rasian rpacific_island       rother rmult_race
+## 1 0.032696854 0.070667394 0.03135115     0.001600291 0.0064011638 0.04051646
+## 2 0.044904070 0.004724125 0.10104406     0.001225977 0.0017592311 0.02156175
+## 3 0.051553500 0.004847681 0.04588567     0.001256138 0.0009835057 0.02057138
+## 4 0.078385807 0.002066246 0.14429985     0.002439799 0.0032150746 0.02266552
+## 5 0.004122991 0.016911251 0.02536688     0.000000000 0.0067085954 0.02634521
+## 6 0.061025802 0.004297019 0.06317680     0.002683460 0.0024616007 0.02404498
+## 7 0.078798305 0.003621632 0.06987568     0.002866408 0.0016863414 0.02467112
+## 8 0.012524410 0.006027305 0.03236429     0.001350948 0.0021693101 0.01470671
+##       rhisp hospitalized_covid_patients icu_covid_confirmed_patients       hosp
+## 1 0.1974541                        1449                          472 0.05270049
+## 2 0.5305768                      141632                        27560 0.14385879
+## 3 0.5332944                       94351                        24242 0.10629410
+## 4 0.4848882                     1161549                       267675 0.11521509
+## 5 0.2700908                         173                           21 0.01208945
+## 6 0.4891179                      265456                        57682 0.11008199
+## 7 0.5332050                      279043                        65696 0.12984596
+## 8 0.6456945                       51309                         7565 0.11108297
+##   covidhosp       cfr         icu fips logcovidhosp is.outlier is.extreme
+## 1  1.812408  8.135196 0.017166758 6015    0.5946562       TRUE      FALSE
+## 2  2.847253 14.003613 0.027993308 6019    1.0463548       TRUE      FALSE
+## 3  1.895403 11.051336 0.027310591 6029    0.6394313       TRUE      FALSE
+## 4  2.161642 18.529023 0.026550924 6037    0.7708681       TRUE      FALSE
+## 5  0.305329  2.684424 0.001467505 6051   -1.1863655       TRUE      FALSE
+## 6  2.022033 13.970086 0.023920157 6065    0.7041035       TRUE      FALSE
+## 7  2.167315 14.737580 0.030570057 6071    0.7734889       TRUE      FALSE
+## 8  1.908018 13.632907 0.016378075 6107    0.6460650       TRUE      FALSE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#\# Sutter, Placer \& Yuba....}
+
+\CommentTok{\# now checking normality}
+\NormalTok{ca }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{shapiro\_test}\NormalTok{(av.aqi)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 3
+##   variable statistic       p
+##   <chr>        <dbl>   <dbl>
+## 1 av.aqi       0.917 0.00112
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# hmmmm pvalue is \textless{}0.05 so we CANNOT assume normality... I am going to go for a one way ANOVA test instead of t test.}
+
+\CommentTok{\# one way anova}
+\NormalTok{res.aov }\OtherTok{\textless{}{-}} \FunctionTok{aov}\NormalTok{(av.aqi }\SpecialCharTok{\textasciitilde{}}\NormalTok{ County, }\AttributeTok{data =}\NormalTok{ ca)}
+\CommentTok{\# Summary of the analysis}
+\FunctionTok{summary.aov}\NormalTok{(res.aov)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             Df Sum Sq Mean Sq
+## County      53  14304   269.9
+## 4 observations deleted due to missingness
+\end{verbatim}
+
+\hypertarget{looking-at-the-relationship-between-the-two}{%
+\subsubsection{looking at the relationship between the
+two}\label{looking-at-the-relationship-between-the-two}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(ca, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ covidhosp, }\AttributeTok{y =}\NormalTok{ av.aqi)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{color=}\StringTok{\textquotesingle{}\#2980B9\textquotesingle{}}\NormalTok{, }\AttributeTok{size =} \DecValTok{4}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method=}\NormalTok{lm, }\AttributeTok{se=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{fullrange=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{color=}\StringTok{\textquotesingle{}\#2C3E50\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula 'y ~ x'
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 5 rows containing non-finite values (stat_smooth).
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 5 rows containing missing values (geom_point).
+\end{verbatim}
+
+\includegraphics{Analysis_files/figure-latex/unnamed-chunk-10-1.pdf}
+
+\hypertarget{demographic-variables-1}{%
+\section{Demographic variables}\label{demographic-variables-1}}
+
+\hypertarget{sex}{%
+\subsection{Sex}\label{sex}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# hist of the male}
+\FunctionTok{hist}\NormalTok{(ca}\SpecialCharTok{$}\NormalTok{rmale)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Analysis_files/figure-latex/unnamed-chunk-11-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# we have a couple extremes}
+
+\NormalTok{ratemat }\OtherTok{\textless{}{-}}\NormalTok{ ca }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(covidhosp, rmale, rfemale) }
+\NormalTok{ratemat.cor }\OtherTok{\textless{}{-}} \FunctionTok{cor}\NormalTok{(ratemat,  }\AttributeTok{method =} \StringTok{"pearson"}\NormalTok{, }\AttributeTok{use =} \StringTok{"complete.obs"}\NormalTok{)}
+\NormalTok{ratemat.cor}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            covidhosp      rmale    rfemale
+## covidhosp  1.0000000 -0.2825944  0.2825944
+## rmale     -0.2825944  1.0000000 -1.0000000
+## rfemale    0.2825944 -1.0000000  1.0000000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{corrplot.mixed}\NormalTok{(ratemat.cor, }\AttributeTok{order =} \StringTok{\textquotesingle{}AOE\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Analysis_files/figure-latex/unnamed-chunk-11-2.pdf}
+
+\hypertarget{race-ethnicity}{%
+\subsection{Race / Ethnicity}\label{race-ethnicity}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# we have a couple extremes}
+\NormalTok{ratemat }\OtherTok{\textless{}{-}}\NormalTok{ ca }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(covidhosp, rnot\_hispanic, rwhite, rblack, rAIANA, rasian, rpacific\_island, rother, rmult\_race, rhisp)}
+\NormalTok{ratemat.cor }\OtherTok{\textless{}{-}} \FunctionTok{cor}\NormalTok{(ratemat,  }\AttributeTok{method =} \StringTok{"pearson"}\NormalTok{, }\AttributeTok{use =} \StringTok{"complete.obs"}\NormalTok{)}
+\NormalTok{ratemat.cor}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                   covidhosp rnot_hispanic      rwhite     rblack      rAIANA
+## covidhosp        1.00000000   -0.03778561 -0.17973286  0.2517883 -0.15604787
+## rnot_hispanic   -0.03778561    1.00000000  0.85470388 -0.1463854  0.33993029
+## rwhite          -0.17973286    0.85470388  1.00000000 -0.4726371  0.40612258
+## rblack           0.25178830   -0.14638540 -0.47263711  1.0000000 -0.23016942
+## rAIANA          -0.15604787    0.33993029  0.40612258 -0.2301694  1.00000000
+## rasian           0.24172855    0.03246797 -0.46228870  0.4390555 -0.35031722
+## rpacific_island  0.16973166    0.12490224 -0.22944183  0.5830641 -0.15242350
+## rother          -0.10398492    0.20065980  0.01894685  0.1600884  0.05102073
+## rmult_race       0.31592829    0.55333180  0.23716907  0.2852034 -0.09091524
+## rhisp            0.03778561   -1.00000000 -0.85470388  0.1463854 -0.33993029
+##                      rasian rpacific_island      rother  rmult_race       rhisp
+## covidhosp        0.24172855       0.1697317 -0.10398492  0.31592829  0.03778561
+## rnot_hispanic    0.03246797       0.1249022  0.20065980  0.55333180 -1.00000000
+## rwhite          -0.46228870      -0.2294418  0.01894685  0.23716907 -0.85470388
+## rblack           0.43905549       0.5830641  0.16008842  0.28520341  0.14638540
+## rAIANA          -0.35031722      -0.1524235  0.05102073 -0.09091524 -0.33993029
+## rasian           1.00000000       0.5374021  0.25873483  0.39655290 -0.03246797
+## rpacific_island  0.53740208       1.0000000  0.18168995  0.47396302 -0.12490224
+## rother           0.25873483       0.1816900  1.00000000  0.24639450 -0.20065980
+## rmult_race       0.39655290       0.4739630  0.24639450  1.00000000 -0.55333180
+## rhisp           -0.03246797      -0.1249022 -0.20065980 -0.55333180  1.00000000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{corrplot.mixed}\NormalTok{(ratemat.cor, }\AttributeTok{order =} \StringTok{\textquotesingle{}AOE\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Analysis_files/figure-latex/unnamed-chunk-12-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# interesting to look at covid hospitalization...}
+\CommentTok{\# strongest appears to be with black and AIANA}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{age}{%
+\subsection{Age}\label{age}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# we have a couple extremes}
+\NormalTok{ratemat }\OtherTok{\textless{}{-}}\NormalTok{ ca }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(covidhosp, runder\_18, rage18to34, rage35to64, rage65,)}
+\NormalTok{ratemat.cor }\OtherTok{\textless{}{-}} \FunctionTok{cor}\NormalTok{(ratemat,  }\AttributeTok{method =} \StringTok{"spearman"}\NormalTok{, }\AttributeTok{use =} \StringTok{"complete.obs"}\NormalTok{)}
+\NormalTok{ratemat.cor}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             covidhosp  runder_18 rage18to34 rage35to64     rage65
+## covidhosp   1.0000000  0.3110048  0.2855776 -0.1753247 -0.3105947
+## runder_18   0.3110048  1.0000000  0.2854409 -0.6568011 -0.7546138
+## rage18to34  0.2855776  0.2854409  1.0000000 -0.5669173 -0.7433356
+## rage35to64 -0.1753247 -0.6568011 -0.5669173  1.0000000  0.5965140
+## rage65     -0.3105947 -0.7546138 -0.7433356  0.5965140  1.0000000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{corrplot.mixed}\NormalTok{(ratemat.cor, }\AttributeTok{order =} \StringTok{\textquotesingle{}AOE\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Analysis_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# now what i expected...}
+\end{Highlighting}
+\end{Shaded}
+
+A descriptive analysis was conducted on all the data. Here, t test and
+one-way ANOVA test were used to compare proportion of cases (PCI),
+proportion of deaths (PCD), and CFR values between states categories.
+Pearson and Spearman correlation, as well as linear regression analysis
+were conducted to assess the association between AQI, comorbidities, and
+demographic data and the number of cases and deaths from COVID-19 per
+100,000 people. We have used log-transformed PCI and PCD as a dependent
+variable and mean AQI, weighted distribution of population in each state
+(\%), and number of previously mentioned diseases of interest in each
+population as independent variables. All the statistical analyses were
+2-tailed and performed at a 5\% significance level using SPSS 16 and
+Prism version 6 (GraphPad).
+
+\end{document}

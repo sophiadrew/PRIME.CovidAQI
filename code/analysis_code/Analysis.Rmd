@@ -1,0 +1,293 @@
+---
+title: "Analysis"
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+  pdf_document: default
+---
+
+```{r, echo=FALSE}
+library(readr) #for loading Excel files & txt files
+library(here) #to set paths
+library(dplyr) #for data processing
+library(rstatix)
+library(ggplot2)
+library(corrplot)
+
+```
+
+
+```{r}
+data_spot <- here::here("data","processed_data","cafinal.rds") 
+ca <- read_rds(data_spot)
+summary(ca)
+```
+
+# Walkthrough of the data:
+
+* Outcome: Covid Hospitalization Ratio = covidhosp = # of hospitalized_covid_patients/CumulativeCase) *1000
+* Main Predictor: AQI = avi.aqi
+
+Note: All variables are by county
+
+### Demographic Variables:
+
+* TotalPop
+* male
+* female
+* under_18 
+* age18to34         
+* age35to64           
+* age65          
+* not_hispanic
+* white             
+* black              
+* AIANA           
+* asian           
+* pacific_island         
+* other            
+* mult_race           
+* hisp
+
+Note: variables with r in front ar the rate form. Ex. rblack i=  # of black residents in county / county population
+
+Now I am going through each variable 
+
+# Covid Hospitalization Ratio
+
+Filter out counties with missing data
+ca1 <- ca %>%
+  filter(!County %in% c("Alpine", "Sierra", "Modoc", 	"Sutter", "Lassen", "Yuba"))
+
+As a reminder, this is the number of covid hospitalization / covid cases per 1,000
+```{r}
+# here is the distribution of the raw numbers
+hist(ca$hospitalized_covid_patients)
+```
+
+obviously there is a county with an outlier...it appears to be sorted out for the rate version
+
+```{r}
+# hist of the ratio
+hist(ca$covidhosp)
+hist(sqrt(ca$covidhosp))
+```
+
+```{r}
+# more histograms
+# hist(log(ca$covidhosp))
+# boxplot(ca$covidhosp, col=terrain.colors(4) )
+
+# log transforming
+ca$logcovidhosp<- log(ca$covidhosp)
+```
+
+### outlier identification
+```{r}
+# identify outliers
+ca %>% identify_outliers(covidhosp)
+#### Sutter, Placer & Yuba....
+```
+### now checking normality
+```{r}
+ca %>% shapiro_test(covidhosp)
+```
+
+hmmmm pvalue is <0.05 so we CANNOT assume normality... I am going to go for a one way ANOVA test instead of t test.
+
+
+### one way anova
+```{r}
+res.aov <- aov(covidhosp ~ County, data = ca)
+# Summary of the analysis
+summary.aov(res.aov)
+
+```
+
+I am not getting any pvalues...
+
+
+# Average Aqi
+```{r}
+# hist of the ratio
+hist(ca$av.aqi)
+boxplot(ca$av.aqi, col=terrain.colors(4) )
+# we hav a couple extremes
+
+# identify outliers
+ca %>% identify_outliers(av.aqi)
+#### Sutter, Placer & Yuba....
+
+# now checking normality
+ca %>% shapiro_test(av.aqi)
+# hmmmm pvalue is <0.05 so we CANNOT assume normality... I am going to go for a one way ANOVA test instead of t test.
+
+# one way anova
+res.aov <- aov(av.aqi ~ County, data = ca)
+# Summary of the analysis
+summary.aov(res.aov)
+
+```
+
+### looking at the relationship between the two
+```{r}
+
+ggplot(ca, aes(x = covidhosp, y = av.aqi)) + 
+  geom_point(color='#2980B9', size = 4) + 
+  geom_smooth(method=lm, se=FALSE, fullrange=TRUE, color='#2C3E50')
+```
+
+# Demographic variables
+## Sex
+```{r}
+# hist of the male
+hist(ca$rmale)
+# we have a couple extremes
+
+ratemat <- ca %>% select(covidhosp, rmale, rfemale) 
+ratemat.cor <- cor(ratemat,  method = "pearson", use = "complete.obs")
+ratemat.cor
+corrplot.mixed(ratemat.cor, order = 'AOE')
+```
+
+## Race / Ethnicity
+```{r}
+# we have a couple extremes
+ratemat <- ca1 %>% select(covidhosp, rnot_hispanic, rwhite, rblack, rAIANA, rasian, rpacific_island, rother, rmult_race, rhisp)
+ratemat.cor <- cor(ratemat,  method = "pearson", use = "complete.obs")
+ratemat.cor
+corrplot.mixed(ratemat.cor, order = 'AOE')
+# interesting to look at covid hospitalization...
+# strongest appears to be with black and AIANA
+```
+
+## Age
+```{r}
+# we have a couple extremes
+ratemat <- ca %>% select(covidhosp, runder_18, rage18to34, rage35to64, rage65,)
+ratemat.cor <- cor(ratemat,  method = "spearman", use = "complete.obs")
+ratemat.cor
+corrplot.mixed(ratemat.cor, order = 'AOE')
+# not what i expected...
+```
+
+
+# fianl correlation plot
+```{r}
+ratemat <- ca1 %>% select(av.aqi:rhisp,covidhosp) #rCumulativeCase,rCumulativeDeath, rTotalPop, male, female, under_18, age18to34, age35to64, age65, not_hispanic, white, black, AIANA, asian, pacific_island, other, mult_race, hisp, av.aqi)
+ratemat.cor <- Hmisc::rcorr(na.omit(as.matrix(ratemat)))
+corrplot(ratemat.cor$r, type="upper", order="hclust", 
+         p.mat = ratemat.cor$P, sig.level = 0.05, insig = "blank")
+ratemat.cor$pval
+
+mcor<-round(cor(ratemat, method = "pearson", use = "complete.obs"),2)
+
+mcor
+as.data.frame( as.table(mcor) )
+pearsonlist <- mcor$covidhosp
+tbl <- as.dt(mcor)
+```
+
+
+ 
+ 
+# linear modeling
+
+## Variables interested in modeling
+
+Main variable: AQI
+
+Other demographic variables:
+
+- 65+ years
+- <18 years
+- Female
+- White 
+- Black
+- Asian
+- Hispanic
+
+library(reshape2)
+
+## Running some individual lm models 
+
+```{r}
+ca2 <- ca1 %>% select(covidhosp, rhisp, rwhite, rblack, rasian, rfemale, runder_18, rage65, av.aqi)
+ca2 = melt(ca2, id.vars='covidhosp')
+ggplot(ca2) +
+  geom_jitter(aes(value,covidhosp, colour=variable),) + geom_smooth(aes(value,covidhosp, colour=variable), method=lm, se=FALSE) +
+  facet_wrap(~variable, scales="free_x") +
+  labs(x = "Covid Hispitalization Rate per 1,000", y = "Vairable Rate") + 
+  theme_minimal() 
+
+
+```
+
+Should we exclude % white?
+
+
+### Running models
+
+```{r}
+lm1 = lm(covidhosp ~ av.aqi, data = ca1)
+summary(lm1)
+
+lm2 = lm(covidhosp ~ av.aqi + rhisp + rwhite + rblack + rasian + rfemale + runder_18 + rage65, data = ca1)
+summary(lm2)
+
+lm3 = lm(covidhosp ~ av.aqi + rhisp +  rblack + rasian + runder_18 + rage65, data = ca1)
+summary(lm3)
+
+lm4 = lm(covidhosp ~ av.aqi + rhisp +  rblack + runder_18 + rage65, data = ca1)
+summary(lm4)
+
+lm5 = lm(covidhosp ~ av.aqi + rhisp +   runder_18 + rage65, data = ca1)
+
+summary(lm5)
+
+# evaluating model 3
+qqnorm(lm3$residuals)
+qqline(lm3$residuals)
+
+ggplot(data = lm3, aes(x = .fitted, y = .resid))+
+    geom_jitter()+
+    geom_hline(yintercept = 0, linetype = "dashed")+
+    xlab("Fitted Values")+
+    ylab("Residuals")
+# hmmmmmmm not sure if I like this
+hist(lm3$residuals)
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
